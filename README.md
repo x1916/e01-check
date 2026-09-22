@@ -61,3 +61,28 @@ Options:
 - WALRUS/EW2 (`.Ex01`) variants are outside the current scope.
 - Header date values in the E01 may be stored as epoch seconds or as a
   formatted string; both are normalized to `YYYY-MM-DD HH:MM:SS` when possible.
+
+## Build a Windows EXE
+
+A standalone, single-file `e01-check.exe` can be built on any Windows machine
+with Python installed (no cross-compilation possible):
+
+```
+build-exe.bat
+```
+
+The script creates a `.venv-build` virtualenv, installs PyInstaller and the
+project dependencies, then produces `dist\e01-check.exe`. The resulting binary
+runs identically to the script:
+
+```
+e01-check.exe [FOLDER ...]
+```
+
+Notes:
+
+- Build on the target architecture (32- vs 64-bit) or ship both if needed.
+- The EXE is unsigned, so Windows SmartScreen/Defender may warn on first run.
+- `--onefile` means the EXE extracts itself to a temp dir on startup, so the
+  first launch takes a few seconds longer than the script.
+- To rebuild after edits: re-run `build-exe.bat` (it reuses `.venv-build`).
